@@ -20,9 +20,12 @@ namespace UsersApp
     /// </summary>
     public partial class MainWindow : Window
     {
+        ApplicationContext db;
         public MainWindow()
         {
             InitializeComponent();
+            db = new ApplicationContext();
+            
         }
 
         private void Button_Reg_Click(object sender, RoutedEventArgs e)
@@ -61,8 +64,12 @@ namespace UsersApp
                 passBox2.Background = Brushes.Transparent;
                 textBoxEmail.ToolTip = "";
                 textBoxEmail.Background = Brushes.Transparent;
-            MessageBox.Show("Все ок!");
-
+                
+                MessageBox.Show("Все ок!");
+                
+                User user = new User(login, email, pass);
+                db.Users.Add(user);
+                db.SaveChanges();
             }
 
         }
