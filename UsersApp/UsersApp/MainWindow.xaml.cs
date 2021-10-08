@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using System.Windows.Media.Animation;
 namespace UsersApp
 {
     /// <summary>
@@ -25,6 +25,12 @@ namespace UsersApp
         {
             InitializeComponent();
             db = new ApplicationContext();
+
+            DoubleAnimation btnAnimation = new DoubleAnimation();
+            btnAnimation.From = 0;
+            btnAnimation.To = 450;
+            btnAnimation.Duration = TimeSpan.FromSeconds(3);
+            regButton.BeginAnimation(Button.WidthProperty,btnAnimation);
             
         }
 
@@ -70,8 +76,20 @@ namespace UsersApp
                 User user = new User(login, email, pass);
                 db.Users.Add(user);
                 db.SaveChanges();
-            }
+            
+                AuthWindow authWindow = new AuthWindow();
+                authWindow.Show();
+                this.Hide();
+            
+        }
 
+        }
+
+        private void Button_Window_Auth_Click(object sender, RoutedEventArgs e)
+        {
+            AuthWindow authWindow = new AuthWindow();
+            authWindow.Show();
+            this.Hide();
         }
     }
 }
